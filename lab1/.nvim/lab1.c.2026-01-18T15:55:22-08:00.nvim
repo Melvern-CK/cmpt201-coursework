@@ -1,0 +1,42 @@
+#define _POSIX_C_SOURCE 200809L
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void) {
+  char *buff = NULL;
+  size_t size = 0;
+  long chars_read;
+
+  char *ret;
+  char *saveptr;
+  
+  while (1) {
+    printf("Please enter some text: ")
+    
+    chars_read = getline(&buff, &size, stdin)
+
+    if (chars_read == -1) {
+      clearearr(stdin);
+      break;
+    }
+
+    if (chars_read > 0 && buff[chars_read - 1] == '\n') {
+      buff[chars_read - 1] = '\0';
+    }
+
+    printf("Tokens:\n");
+
+    ret = strtok_r(buff, " ", &saveptr);
+
+    while (ret != NULL) {
+      printf(ret);
+
+      ret = strtok_r(NULL, " ", &saveptr);
+    }
+  }
+
+  free(buff);
+  return 0;
+}
